@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<h1>Profile &amp; Skills</h1>
+<p class="sub">The more complete your profile, the better your recommendations.</p>
+<form method="post">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <div class="grid cols-2">
+    <div class="card">
+      <h2>About you</h2>
+      <label for="name">Full name</label>
+      <input id="name" name="name" value="{{ current_user.name }}" required>
+      <label for="education">Educational qualification</label>
+      <input id="education" name="education" value="{{ current_user.education }}" placeholder="e.g. B.Tech CSE">
+      <label for="experience">Experience</label>
+      <select id="experience" name="experience">
+        {% for opt in ['Fresher', 'Some project experience', 'Previous internship'] %}
+          <option {{ 'selected' if current_user.experience == opt }}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+      <label for="projects">Projects</label>
+      <textarea id="projects" name="projects">{{ current_user.projects }}</textarea>
+      <label for="certifications">Certifications</label>
+      <textarea id="certifications" name="certifications">{{ current_user.certifications }}</textarea>
+    </div>
+
+    <div class="card">
+      <h2>Skills &amp; preferences</h2>
+      <label for="skills">Technical skills &amp; programming languages (comma separated)</label>
+      <textarea id="skills" name="skills" list="skill-list" placeholder="Python, SQL, Machine Learning">{{ skills }}</textarea>
+      <div class="meta">Known skills: {% for s in all_skills[:40] %}<span class="chip">{{ s }}</span>{% endfor %}</div>
+      <label for="interests">Interests</label>
+      <input id="interests" name="interests" value="{{ current_user.interests }}" placeholder="e.g. Data Science, AI">
+      <label for="preferred_domain">Preferred domain</label>
+      <select id="preferred_domain" name="preferred_domain">
+        <option value="">— any —</option>
+        {% for d in domains %}<option {{ 'selected' if current_user.preferred_domain == d }}>{{ d }}</option>{% endfor %}
+      </select>
+      <label for="preferred_location">Location preference</label>
+      <select id="preferred_location" name="preferred_location">
+        <option value="">— any —</option>
+        {% for l in locations %}<option {{ 'selected' if current_user.preferred_location == l }}>{{ l }}</option>{% endfor %}
+      </select>
+      <label for="preferred_duration">Internship duration</label>
+      <select id="preferred_duration" name="preferred_duration">
+        <option value="">— any —</option>
+        {% for d in durations %}<option value="{{ d }}" {{ 'selected' if current_user.preferred_duration == d }}>{{ d }} month{{ 's' if d != 1 }}</option>{% endfor %}
+      </select>
+    </div>
+  </div>
+  <button class="btn" type="submit">Save &amp; see recommendations</button>
+</form>
+{% endblock %}

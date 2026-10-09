@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if item and item.id else 'Add' }} internship{% endblock %}
+{% block content %}
+{% set v = item or {} %}
+<h1>{{ 'Edit' if v.get('id') else 'Add' }} internship</h1>
+<form class="card" method="post" style="max-width:640px">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <label for="title">Title</label>
+  <input id="title" name="title" required value="{{ v.get('title', '') }}">
+  <label for="company">Company</label>
+  <input id="company" name="company" required value="{{ v.get('company', '') }}">
+  <label for="domain">Domain</label>
+  <input id="domain" name="domain" list="domains" required value="{{ v.get('domain', '') }}">
+  <datalist id="domains">{% for d in domains %}<option value="{{ d }}">{% endfor %}</datalist>
+  <label for="location">Location</label>
+  <input id="location" name="location" list="locations" required value="{{ v.get('location', '') }}">
+  <datalist id="locations">{% for l in locations %}<option value="{{ l }}">{% endfor %}</datalist>
+  <div class="grid cols-2">
+    <div><label for="duration">Duration (months)</label>
+      <input id="duration" name="duration" type="number" min="1" required value="{{ v.get('duration', '') }}"></div>
+    <div><label for="stipend">Stipend (₹/month)</label>
+      <input id="stipend" name="stipend" type="number" min="0" value="{{ v.get('stipend', 0) }}"></div>
+  </div>
+  <label for="skills">Required skills (comma separated)</label>
+  <input id="skills" name="skills" required value="{{ v.get('skills', [])|join(', ') }}" placeholder="Python, SQL, Machine Learning">
+  <label for="description">Description</label>
+  <textarea id="description" name="description">{{ v.get('description', '') }}</textarea>
+  <p><button class="btn" type="submit">Save</button>
+     <a class="btn ghost" href="{{ url_for('admin_panel') }}">Cancel</a></p>
+</form>
+{% endblock %}

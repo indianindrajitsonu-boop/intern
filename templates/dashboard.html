@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Hello, {{ current_user.name }} 👋</h1>
+<p class="sub">Here is a snapshot of your internship matches.</p>
+
+<div class="grid cols-3">
+  <div class="card stat"><b>{{ skills|length }}</b>Skills in profile</div>
+  <div class="card stat"><b>{{ total_good }}</b>Strong matches (≥ 60%)</div>
+  <div class="card">
+    <div class="meta">Profile completion</div>
+    <div class="progress" style="margin:8px 0"><i style="width: {{ completion }}%"></i></div>
+    <b>{{ completion }}%</b> · <a href="{{ url_for('profile') }}">Update profile</a>
+  </div>
+</div>
+
+{% if not skills %}
+  <div class="card">
+    <h2>Add your skills to get started</h2>
+    <p>No skills yet, so we can't match you with internships.</p>
+    <a class="btn" href="{{ url_for('profile') }}">Add skills</a>
+  </div>
+{% else %}
+  <div class="card">
+    <h2>Your skills</h2>
+    {% for s in skills %}<span class="chip">{{ s }}</span>{% endfor %}
+  </div>
+  <h2>Top recommendations</h2>
+  {% for r in recs if r.score > 0 %}
+    {% include "_rec_card.html" %}
+  {% else %}
+    <div class="card">No internships match your current skills yet. Check the <a href="{{ url_for('skill_gap_view') }}">skill-gap page</a> for what to learn next.</div>
+  {% endfor %}
+  <p><a class="btn ghost" href="{{ url_for('recommendations') }}">See all recommendations</a>
+     <a class="btn ghost" href="{{ url_for('skill_gap_view') }}">Skill gap analysis</a></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<h1>Admin panel</h1>
+<p class="sub">Manage internships and see what students are looking for.</p>
+
+<div class="grid cols-3">
+  <div class="card stat"><b>{{ stats.internships }}</b>Internships</div>
+  <div class="card stat"><b>{{ stats.students }}</b>Students</div>
+  <div class="card">
+    <div class="meta">Most common student skills</div>
+    {% for s in top_skills %}<span class="chip">{{ s.skill_name }} · {{ s.c }}</span>{% else %}<span class="meta">No data yet</span>{% endfor %}
+    <div class="meta" style="margin-top:8px">Domain interest</div>
+    {% for d in domain_interest %}<span class="chip">{{ d.d }} · {{ d.c }}</span>{% else %}<span class="meta">No data yet</span>{% endfor %}
+  </div>
+</div>
+
+<div class="card">
+  <div class="rec-head"><h2>Internships</h2>
+    <a class="btn small" href="{{ url_for('admin_internship_form') }}">+ Add internship</a></div>
+  <div style="overflow-x:auto">
+  <table>
+    <tr><th>Title</th><th>Company</th><th>Domain</th><th>Location</th><th>Months</th><th>Required skills</th><th></th></tr>
+    {% for i in items %}
+    <tr>
+      <td>{{ i.title }}</td><td>{{ i.company }}</td><td>{{ i.domain }}</td><td>{{ i.location }}</td><td>{{ i.duration }}</td>
+      <td>{% for s in i.skills %}<span class="chip">{{ s }}</span>{% endfor %}</td>
+      <td style="white-space:nowrap">
+        <a class="btn ghost small" href="{{ url_for('admin_internship_form', iid=i.id) }}">Edit</a>
+        <form method="post" action="{{ url_for('admin_delete', iid=i.id) }}" style="display:inline"
+              onsubmit="return confirm('Delete this internship?')">
+          <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+          <button class="btn danger small" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Recommendations{% endblock %}
+{% block content %}
+<h1>Recommended internships</h1>
+<p class="sub">Match Score = matched skills ÷ required skills × 100. Ties are broken using your domain, location and duration preferences.</p>
+
+{% if not skills %}
+  <div class="card"><b>You haven't added any skills yet.</b>
+    <p><a class="btn" href="{{ url_for('profile') }}">Add skills</a></p></div>
+{% else %}
+  <form class="card filters" method="get">
+    <div>
+      <label for="min_score">Minimum match: <span id="ms">{{ min_score }}</span>%</label>
+      <input id="min_score" name="min_score" type="range" min="0" max="100" step="10" value="{{ min_score }}"
+             oninput="document.getElementById('ms').textContent=this.value">
+    </div>
+    <div><button class="btn" type="submit">Apply</button></div>
+  </form>
+
+  {% for r in recs %}
+    {% include "_rec_card.html" %}
+  {% else %}
+    <div class="card">
+      <b>No internships meet the current threshold.</b>
+      <p>Try lowering the minimum match, or see which skills to learn on the
+        <a href="{{ url_for('skill_gap_view') }}">skill-gap page</a>.</p>
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock %}

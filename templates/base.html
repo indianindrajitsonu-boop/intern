@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Internship Recommender{% endblock %} · Student Skill & Internship Recommendation System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+  <div class="container">
+    <a class="brand" href="{{ url_for('index') }}">🎯 Skill &amp; Internship Recommender</a>
+    {% if current_user %}
+      {% if current_user.is_admin %}
+        <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+        <a href="{{ url_for('admin_internship_form') }}">Add Internship</a>
+      {% else %}
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('profile') }}">Profile &amp; Skills</a>
+        <a href="{{ url_for('recommendations') }}">Recommendations</a>
+        <a href="{{ url_for('internships') }}">Browse</a>
+        <a href="{{ url_for('skill_gap_view') }}">Skill Gap</a>
+      {% endif %}
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+        <button class="linkbtn" type="submit">Logout ({{ current_user.name.split()[0] }})</button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a class="btn small" href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  </div>
+</nav>
+<main>
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </div>
+</main>
+<footer>Student Skill &amp; Internship Recommendation System · Software Engineering Case Study</footer>
+</body>
+</html>

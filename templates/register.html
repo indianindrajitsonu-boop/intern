@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="card" style="max-width:460px;margin:0 auto">
+  <h1>Create account</h1>
+  <p class="sub">Students register here to get personalised internship recommendations.</p>
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <label for="name">Full name</label>
+    <input id="name" name="name" required value="{{ form.get('name', '') }}">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" required value="{{ form.get('email', '') }}">
+    <label for="password">Password (min 6 characters)</label>
+    <input id="password" name="password" type="password" minlength="6" required>
+    <label for="education">Education</label>
+    <input id="education" name="education" placeholder="e.g. B.Tech CSE, 3rd year" value="{{ form.get('education', '') }}">
+    <p><button class="btn" type="submit">Register</button></p>
+  </form>
+  <p class="meta">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+</div>
+{% endblock %}

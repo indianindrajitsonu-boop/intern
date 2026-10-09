@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Skill Gap{% endblock %}
+{% block content %}
+<h1>Skill gap analysis</h1>
+<p class="sub">Skills you are missing that appear most often in {{ domain or 'all' }} internships ({{ pool_size }} analysed).</p>
+
+<form class="card filters" method="get">
+  <div><label for="domain">Target domain</label>
+    <select id="domain" name="domain" onchange="this.form.submit()">
+      <option value="">All domains</option>
+      {% for d in domains %}<option {{ 'selected' if d == domain }}>{{ d }}</option>{% endfor %}
+    </select></div>
+  <noscript><button class="btn" type="submit">Apply</button></noscript>
+</form>
+
+<div class="card">
+  <h2>Your current skills</h2>
+  {% for s in skills %}<span class="chip have">{{ s }}</span>{% else %}
+    <span class="meta">None yet — <a href="{{ url_for('profile') }}">add some</a>.</span>{% endfor %}
+</div>
+
+<div class="card">
+  <h2>Skills to improve</h2>
+  {% if gaps %}
+  <table>
+    <tr><th>Skill</th><th>Needed in</th><th>Suggested course</th></tr>
+    {% for skill, count in gaps %}
+      <tr><td><span class="chip miss">{{ skill }}</span></td>
+          <td>{{ count }} internship{{ 's' if count != 1 }}</td>
+          <td>{{ courses[skill] or '—' }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}
+    <p>🎉 You already have every skill required in this domain.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="rec-head">
+    <div>
+      <h2 style="margin-bottom:2px">{{ r.title }}
+        {% if r.domain_match %}<span class="badge">Your domain</span>{% endif %}</h2>
+      <div class="meta">{{ r.company }} · {{ r.domain }} · {{ r.location }} · {{ r.duration }} month{{ 's' if r.duration != 1 }}
+        {% if r.stipend %}· ₹{{ '{:,}'.format(r.stipend) }}/mo{% endif %}</div>
+    </div>
+    <div class="score">{{ r.score }}% <span class="meta" style="font-weight:400">match</span></div>
+  </div>
+  <div class="bar"><i class="{{ 'mid' if r.score < 70 and r.score >= 40 else ('low' if r.score < 40 else '') }}" style="width: {{ r.score }}%"></i></div>
+  {% if r.description %}<p class="meta" style="margin:0 0 8px">{{ r.description }}</p>{% endif %}
+  <div>
+    {% for s in r.matched %}<span class="chip have">✓ {{ s }}</span>{% endfor %}
+    {% for s in r.missing %}<span class="chip miss">✗ {{ s }}</span>{% endfor %}
+  </div>
+</div>

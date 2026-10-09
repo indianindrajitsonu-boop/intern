@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero">
+  <h1>Right student, right internship.</h1>
+  <p class="sub">Tell us your skills and interests — we match them against internship requirements, score every opportunity and show exactly which skills to improve.</p>
+  {% if current_user %}
+    <a class="btn" href="{{ url_for('recommendations') }}">View my recommendations</a>
+  {% else %}
+    <a class="btn" href="{{ url_for('register') }}">Get started</a>
+    <a class="btn ghost" href="{{ url_for('login') }}">Login</a>
+  {% endif %}
+</div>
+<div class="grid cols-3">
+  <div class="card stat"><b>{{ stats.internships }}</b>Internships listed</div>
+  <div class="card stat"><b>{{ stats.students }}</b>Students registered</div>
+  <div class="card stat"><b>{{ stats.skills }}</b>Skills tracked</div>
+</div>
+<div class="card">
+  <h2>How it works</h2>
+  <ol>
+    <li>Create your profile and add your skills, interests, preferred domain, location and duration.</li>
+    <li>The engine computes <b>Match Score = Matched Skills ÷ Required Skills × 100</b> for every internship.</li>
+    <li>Browse ranked recommendations, see matched / missing skills, and follow the skill-gap suggestions.</li>
+  </ol>
+</div>
+{% endblock %}
