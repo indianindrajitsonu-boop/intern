@@ -1,0 +1,61 @@
+:root {
+  --bg: #f5f7fb; --card: #fff; --ink: #1c2434; --muted: #667085; --line: #e4e7ec;
+  --brand: #3b5bdb; --brand-dark: #2f49b0; --ok: #12b76a; --warn: #f79009; --err: #d92d20;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg); color: var(--ink); line-height: 1.5; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+nav { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+nav .container { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+nav .brand { font-weight: 700; color: var(--ink); margin-right: auto; }
+nav form { margin: 0; }
+main { padding: 24px 0 48px; }
+h1 { font-size: 1.6rem; margin: 0 0 4px; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+.sub { color: var(--muted); margin: 0 0 20px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+.grid { display: grid; gap: 16px; }
+.grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.grid.cols-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.stat { text-align: center; }
+.stat b { display: block; font-size: 1.9rem; color: var(--brand); }
+label { display: block; font-weight: 600; font-size: .9rem; margin: 12px 0 4px; }
+input, select, textarea { width: 100%; padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px;
+  font: inherit; background: #fff; }
+input:focus, select:focus, textarea:focus { outline: 2px solid #c5d0fa; border-color: var(--brand); }
+textarea { min-height: 80px; resize: vertical; }
+.btn { display: inline-block; background: var(--brand); color: #fff; border: 0; border-radius: 8px;
+  padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+.btn:hover { background: var(--brand-dark); text-decoration: none; }
+.btn.ghost { background: transparent; color: var(--brand); border: 1px solid var(--brand); }
+.btn.danger { background: var(--err); }
+.btn.small { padding: 5px 10px; font-size: .85rem; }
+.linkbtn { background: none; border: 0; color: var(--brand); cursor: pointer; font: inherit; padding: 0; }
+.flash { padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; border: 1px solid; }
+.flash.ok { background: #ecfdf3; border-color: #abefc6; color: #067647; }
+.flash.error { background: #fef3f2; border-color: #fecdca; color: #b42318; }
+.flash.warn { background: #fffaeb; border-color: #fedf89; color: #b54708; }
+.chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .8rem; margin: 2px 4px 2px 0;
+  background: #eef2ff; color: #3538cd; }
+.chip.have { background: #ecfdf3; color: #067647; }
+.chip.miss { background: #fef3f2; color: #b42318; }
+.meta { color: var(--muted); font-size: .88rem; }
+.rec-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.score { font-size: 1.4rem; font-weight: 700; white-space: nowrap; }
+.bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 8px 0 10px; }
+.bar > i { display: block; height: 100%; background: var(--ok); }
+.bar > i.mid { background: var(--warn); }
+.bar > i.low { background: var(--err); }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: .92rem; }
+.filters { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); align-items: end; }
+.hero { text-align: center; padding: 48px 0 24px; }
+.hero h1 { font-size: 2.1rem; }
+.badge { background: #eef2ff; color: var(--brand); padding: 1px 8px; border-radius: 6px; font-size: .75rem; font-weight: 600; }
+.progress { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.progress > i { display: block; height: 100%; background: var(--brand); }
+footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 20px; }
+@media (max-width: 600px) { .rec-head { flex-direction: column; } }
